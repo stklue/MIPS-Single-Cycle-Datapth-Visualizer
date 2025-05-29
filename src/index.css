@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  background-color: bg-background;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, .root   {
+  max-height: 100vh;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* background-color: green; */
+  /* margin: 1em; */
+}
+/* svg > path {
+  stroke-dashoffset: 1;
+  stroke-dasharray: 1; */
+/* } */
+
+.line-running {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+@theme inline {
+  --color-background: #1d1e22;
+  --color-header: #feda6a;
+  /* --color-canvas: #393f4d; */
+  /* --color-canvas: #d4d4dc; */
+
+  --animate-line-running: line-animation 0.5s linear forwards;
+  @keyframes line-animation {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+/* Are ya yellow?!: #feda6a
+
+Silver Fox: #d4d4dc
+
+Deep Matte Grey: #393f4d
+
+Dark Slate: #1d1e22 */
+/* 
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  svg > path {
+    @apply stroke-dash;
+  }
+} */
