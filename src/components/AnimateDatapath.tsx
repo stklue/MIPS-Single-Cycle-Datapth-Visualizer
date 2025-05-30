@@ -1,7 +1,6 @@
 import type { Bus } from "../types/types";
 
 export const AnimateDatapath = ({ bus }: { bus: Bus }) => {
-  console.log("This is the data received: ", bus);
   const start = bus.source;
   const end = bus.destination;
   const offset = 20; // distance from the source to place the elbow

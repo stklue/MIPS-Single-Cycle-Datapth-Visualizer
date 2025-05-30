@@ -2,13 +2,14 @@ import { useState } from "react";
 import DraggableSVGElement from "./DraggableSvgElement";
 import { buses, components, instruction_choices } from "../data/data";
 import { BusRenderer } from "./BusRenderer";
-import { AnimateStage } from "./AnimateStage";
+import { AnimateStage, FinishedPaths } from "./AnimateStage";
 export default function MipsCPUDatapath() {
   const [instructionChoice, setChoice] = useState(instruction_choices[0].value);
   // const filterBuses = buses.filter(bus => bus.id === "MUXOUT-PCADDRESSIN")
   // const [selectedInstruction, setSelectedInstruction] = useState<string>(INSTRUCTIONS[0].value)
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [currentStage, setCurrentStage] = useState<number>(0);
+  const [renderedStages, setRenderedStages] = useState<number[]>([]);
   const stages: string[] = [
     "Instruction Fetch",
     "Instruction Decode",
@@ -20,6 +21,7 @@ export default function MipsCPUDatapath() {
   const handleRunAnimation = () => {
     setIsAnimating(true);
     setCurrentStage(0);
+    setRenderedStages([]);
 
     // Simulate animation through each stage
     const stageInterval = setInterval(() => {
@@ -27,11 +29,15 @@ export default function MipsCPUDatapath() {
         if (prev >= stages.length - 1) {
           clearInterval(stageInterval);
           setIsAnimating(false);
+          setRenderedStages((prevStages) => [...prevStages, prev]);
           return prev;
         }
+        setRenderedStages((prevStages) => [...prevStages, prev]);
         return prev + 1;
       });
-    }, 2000); // 2 seconds per stage
+
+      // setRenderedStages((prevStages) => [...prevStages, currentStage]);
+    }, 3000); // 2 seconds per stage
   };
 
   return (
@@ -41,7 +47,6 @@ export default function MipsCPUDatapath() {
           value={instructionChoice}
           onChange={(val) => setChoice(val.target.value)}
           className="bg-background/90 text-header"
-          // defaultValue={"add"}
         >
           {instruction_choices.map((instruction) => (
             <option key={instruction.value} value={instruction.value}>
@@ -49,7 +54,12 @@ export default function MipsCPUDatapath() {
             </option>
           ))}
         </select>
-        <button className="p-2 bg-amber-500 rounded-lg cursor-pointer" onClick={handleRunAnimation}>Run Animation</button>
+        <button
+          className="p-2 bg-amber-500 rounded-lg cursor-pointer"
+          onClick={handleRunAnimation}
+        >
+          Run Animation
+        </button>
         <span>{stages[currentStage]}</span>
         <div>
           <svg
@@ -220,7 +230,15 @@ export default function MipsCPUDatapath() {
                 </g>
               </DraggableSVGElement>
             ))}
-            <AnimateStage isAnimating={isAnimating}  activeStage={currentStage} currentInstruction={instructionChoice} />
+            <AnimateStage
+              isAnimating={isAnimating}
+              activeStage={currentStage}
+              currentInstruction={instructionChoice}
+            />
+            <FinishedPaths
+              currentInstruction={instructionChoice}
+              finishedPaths={renderedStages}
+            />
           </svg>
         </div>
       </section>

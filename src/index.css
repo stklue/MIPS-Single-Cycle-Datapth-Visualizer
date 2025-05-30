@@ -32,7 +32,7 @@ body,
   transform: scale(0.5);
   transform-origin: center;
   /* animation: arrow-fade-in 0.3s ease-out forwards; */
-  animation-delay: 1.8s;
+  animation-delay: 3s;
 }
 
 
@@ -42,7 +42,7 @@ body,
   /* --color-canvas: #393f4d; */
   /* --color-canvas: #d4d4dc; */
 
-  --animate-line-running: line-animation 2s linear forwards;
+  --animate-line-running: line-animation 3s linear forwards;
   --animate-line-arrow: arrow-animation 0.2s ease-out forwards;
 
   @keyframes line-animation {
