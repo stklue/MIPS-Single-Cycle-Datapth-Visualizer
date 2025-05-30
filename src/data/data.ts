@@ -3,7 +3,6 @@ import {
   Adder,
   ALU,
   ALUControl,
-  // Bus,
   Control,
   CPUComponent,
   DataMemory,
@@ -423,6 +422,307 @@ export const datapaths: Datapath = {
       stages: [3],
     },
   ],
-
-  
+  sw: [
+    {
+      bus: {
+        id: "0",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.IM.addressInPort,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id: "1",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.ADDBr.input1Port,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.RF.readReg1Port.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.RF.readReg1Port,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.RF.readReg2Port.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.RF.readReg2Port,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.SEx.inputPort.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.SEx.inputPort,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.RF.readData1Port.name + "-" + mips_cpu.ALU.aluOp1Port.name,
+        source: mips_cpu.RF.readData1Port,
+        destination: mips_cpu.ALU.aluOp1Port,
+        fromComponentHeight: mips_cpu.RF.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id: mips_cpu.SEx.outputPort.name + "-" + mips_cpu.ALU.aluOp2Port.name,
+        source: mips_cpu.SEx.outputPort,
+        destination: mips_cpu.ALU.aluOp2Port,
+        fromComponentHeight: mips_cpu.SEx.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id: mips_cpu.ALU.resultPort.name + "-" + mips_cpu.DM.addressInPort.name,
+        source: mips_cpu.ALU.resultPort,
+        destination: mips_cpu.DM.addressInPort,
+        fromComponentHeight: mips_cpu.ALU.height,
+      },
+      stages: [3],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.RF.readData2Port.name + "-" + mips_cpu.DM.writeDataPort.name,
+        source: mips_cpu.RF.readData2Port,
+        destination: mips_cpu.DM.writeDataPort,
+        fromComponentHeight: mips_cpu.RF.height,
+      },
+      stages: [3],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.ADDPC.resultPort.name + "-" + mips_cpu.PC.addressInPort.name,
+        source: mips_cpu.ADDPC.resultPort,
+        destination: mips_cpu.PC.addressInPort,
+        fromComponentHeight: mips_cpu.ADDPC.height,
+      },
+      stages: [4],
+    },
+  ],
+  beq: [
+    {
+      bus: {
+        id: "0",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.IM.addressInPort,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id: "1",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.ADDBr.input1Port,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.RF.readReg1Port.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.RF.readReg1Port,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.RF.readReg2Port.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.RF.readReg2Port,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name +
+          "-" +
+          mips_cpu.CON.instructionPort.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.CON.instructionPort,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.SEx.inputPort.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.SEx.inputPort,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.RF.readData1Port.name + "-" + mips_cpu.ALU.aluOp1Port.name,
+        source: mips_cpu.RF.readData1Port,
+        destination: mips_cpu.ALU.aluOp1Port,
+        fromComponentHeight: mips_cpu.RF.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id: mips_cpu.RF.readData2Port.name + "-" + mips_cpu.ALU.aluOp2Port.name,
+        source: mips_cpu.RF.readData2Port,
+        destination: mips_cpu.ALU.aluOp2Port,
+        fromComponentHeight: mips_cpu.RF.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id: mips_cpu.SEx.outputPort.name + "-" + mips_cpu.LS.inputPort.name,
+        source: mips_cpu.SEx.outputPort,
+        destination: mips_cpu.LS.inputPort,
+        fromComponentHeight: mips_cpu.SEx.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id: mips_cpu.LS.outputPort.name + "-" + mips_cpu.ADDBr.input2Port.name,
+        source: mips_cpu.LS.outputPort,
+        destination: mips_cpu.ADDBr.input2Port,
+        fromComponentHeight: mips_cpu.LS.height,
+      },
+      stages: [2],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.ADDBr.resultPort.name +
+          "-" +
+          mips_cpu.MuxAdd.input2Port.name,
+        source: mips_cpu.ADDBr.resultPort,
+        destination: mips_cpu.MuxAdd.input2Port,
+        fromComponentHeight: mips_cpu.ADDBr.height,
+      },
+      stages: [3],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.ADDPC.resultPort.name +
+          "-" +
+          mips_cpu.MuxAdd.input1Port.name,
+        source: mips_cpu.ADDPC.resultPort,
+        destination: mips_cpu.MuxAdd.input1Port,
+        fromComponentHeight: mips_cpu.ADDPC.height,
+      },
+      stages: [3],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.MuxAdd.outputPort.name +
+          "-" +
+          mips_cpu.PC.addressInPort.name,
+        source: mips_cpu.MuxAdd.outputPort,
+        destination: mips_cpu.PC.addressInPort,
+        fromComponentHeight: mips_cpu.MuxAdd.height,
+      },
+      stages: [4],
+    },
+  ],
+  j: [
+    {
+      bus: {
+        id: "0",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.IM.addressInPort,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id: "1",
+        source: mips_cpu.PC.addressOutPort,
+        destination: mips_cpu.ADDPC.input1Port,
+        fromComponentHeight: mips_cpu.PC.height,
+      },
+      stages: [0],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.IM.decodeOutPort.name +
+          "-" +
+          mips_cpu.CON.instructionPort.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.CON.instructionPort,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.IM.decodeOutPort.name + "-" + mips_cpu.LS.inputPort.name,
+        source: mips_cpu.IM.decodeOutPort,
+        destination: mips_cpu.LS.inputPort,
+        fromComponentHeight: mips_cpu.IM.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id: mips_cpu.LS.outputPort.name + "-" + mips_cpu.MuxAdd.input2Port.name,
+        source: mips_cpu.LS.outputPort,
+        destination: mips_cpu.MuxAdd.input2Port,
+        fromComponentHeight: mips_cpu.LS.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.ADDPC.resultPort.name +
+          "-" +
+          mips_cpu.MuxAdd.input1Port.name,
+        source: mips_cpu.ADDPC.resultPort,
+        destination: mips_cpu.MuxAdd.input1Port,
+        fromComponentHeight: mips_cpu.ADDPC.height,
+      },
+      stages: [1],
+    },
+    {
+      bus: {
+        id:
+          mips_cpu.MuxAdd.outputPort.name +
+          "-" +
+          mips_cpu.PC.addressInPort.name,
+        source: mips_cpu.MuxAdd.outputPort,
+        destination: mips_cpu.PC.addressInPort,
+        fromComponentHeight: mips_cpu.MuxAdd.height,
+      },
+      stages: [4],
+    },
+  ],
 };

@@ -220,25 +220,10 @@ export default function MipsCPUDatapath() {
                 </g>
               </DraggableSVGElement>
             ))}
-            <AnimateStage isAnimating={isAnimating}  activeStage={currentStage} currentInstruction="add" />
+            <AnimateStage isAnimating={isAnimating}  activeStage={currentStage} currentInstruction={instructionChoice} />
           </svg>
         </div>
-        <div>{/* <AnimateStage activeStage={} /> */}</div>
       </section>
     </>
   );
-}
-
-{
-  /* <path
-                    d={`M ${comp.x},${comp.y} L ${comp.endX},${comp.endY}`}
-                    stroke="#333333"
-                    stroke-width="5"
-                  />
-                  <path
-                    d={`M ${comp.x},${comp.y} L ${comp.endX},${comp.endY}`}
-                    stroke-width="5"
-                    pathLength="1"
-                    className="line-running stroke-orange-400  hover:stroke-blue-500 hover:cursor-pointer animate-line-running"
-                  />  */
 }
