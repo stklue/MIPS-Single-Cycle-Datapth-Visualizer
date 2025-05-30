@@ -48,8 +48,6 @@ export const FinishedPaths = ({
     return drawPaths;
   }
 
-  // console.log("These are the paths: ", finishedPaths.length ,getPaths());
-
   function getPath(bus: Bus): string {
     const start = bus.source;
     const end = bus.destination;

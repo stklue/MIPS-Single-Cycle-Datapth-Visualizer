@@ -5,8 +5,6 @@ import { BusRenderer } from "./BusRenderer";
 import { AnimateStage, FinishedPaths } from "./AnimateStage";
 export default function MipsCPUDatapath() {
   const [instructionChoice, setChoice] = useState(instruction_choices[0].value);
-  // const filterBuses = buses.filter(bus => bus.id === "MUXOUT-PCADDRESSIN")
-  // const [selectedInstruction, setSelectedInstruction] = useState<string>(INSTRUCTIONS[0].value)
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [currentStage, setCurrentStage] = useState<number>(0);
   const [renderedStages, setRenderedStages] = useState<number[]>([]);
@@ -36,7 +34,6 @@ export default function MipsCPUDatapath() {
         return prev + 1;
       });
 
-      // setRenderedStages((prevStages) => [...prevStages, currentStage]);
     }, 3000); // 2 seconds per stage
   };
 
