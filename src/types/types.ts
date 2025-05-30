@@ -16,17 +16,6 @@ export type ComponentType =
   | "control"
   | "bus";
 
-// export interface Component {
-//   id: number;
-//   type: ComponentType;
-//   x: number;
-//   y: number;
-//   width: number;
-//   height: number;
-//   label: string;
-//   ports: Port[];
-// }
-
 export class Component {
   id: number;
   type: ComponentType;
@@ -126,7 +115,10 @@ export type PortName =
   | "ALUOPIN"
   | "ALUOPOUT";
 
-export interface Point {x: number; y: number}
+export interface Point {
+  x: number;
+  y: number;
+}
 
 export interface Bus {
   id: string;
@@ -135,4 +127,8 @@ export interface Bus {
   fromComponentHeight: number;
   color?: string;
   width?: number;
+}
+
+export interface Datapath {
+  [key: string]: { bus: Bus; stages: number[] }[];
 }

@@ -1,15 +1,42 @@
-import {  useState } from "react";
+import { useState } from "react";
 import DraggableSVGElement from "./DraggableSvgElement";
 import { buses, components, instruction_choices } from "../data/data";
 import { BusRenderer } from "./BusRenderer";
-
+import { AnimateStage } from "./AnimateStage";
 export default function MipsCPUDatapath() {
-  const [instructionChoice, setChoice] = useState("add");
+  const [instructionChoice, setChoice] = useState(instruction_choices[0].value);
   // const filterBuses = buses.filter(bus => bus.id === "MUXOUT-PCADDRESSIN")
+  // const [selectedInstruction, setSelectedInstruction] = useState<string>(INSTRUCTIONS[0].value)
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [currentStage, setCurrentStage] = useState<number>(0);
+  const stages: string[] = [
+    "Instruction Fetch",
+    "Instruction Decode",
+    "Execute",
+    "Memory Access",
+    "Write Back",
+  ];
+
+  const handleRunAnimation = () => {
+    setIsAnimating(true);
+    setCurrentStage(0);
+
+    // Simulate animation through each stage
+    const stageInterval = setInterval(() => {
+      setCurrentStage((prev) => {
+        if (prev >= stages.length - 1) {
+          clearInterval(stageInterval);
+          setIsAnimating(false);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 2000); // 2 seconds per stage
+  };
 
   return (
     <>
-      <section className=" h-full flex-3 p-4 space-y-2">
+      <section className=" h-full flex-3 p-4 space-y-2 space-x-4">
         <select
           value={instructionChoice}
           onChange={(val) => setChoice(val.target.value)}
@@ -17,16 +44,19 @@ export default function MipsCPUDatapath() {
           // defaultValue={"add"}
         >
           {instruction_choices.map((instruction) => (
-            <option key={instruction.value} value={instruction.value}>{instruction.format}</option>
+            <option key={instruction.value} value={instruction.value}>
+              {instruction.format}
+            </option>
           ))}
         </select>
+        <button className="p-2 bg-amber-500 rounded-lg cursor-pointer" onClick={handleRunAnimation}>Run Animation</button>
+        <span>{stages[currentStage]}</span>
         <div>
           <svg
             viewBox="-100 -100 500 500"
             height={500}
             className="w-full bg-background/50"
           >
-            {/* <path d={path} /> */}
             {buses.map((bus) => (
               <BusRenderer key={bus.id} bus={bus} />
             ))}
@@ -45,7 +75,6 @@ export default function MipsCPUDatapath() {
                   {(() => {
                     switch (comp.type) {
                       case "adder":
-                        // Adder shape (triangle)
                         return (
                           <path
                             d={`
@@ -191,8 +220,10 @@ export default function MipsCPUDatapath() {
                 </g>
               </DraggableSVGElement>
             ))}
+            <AnimateStage isAnimating={isAnimating}  activeStage={currentStage} currentInstruction="add" />
           </svg>
         </div>
+        <div>{/* <AnimateStage activeStage={} /> */}</div>
       </section>
     </>
   );

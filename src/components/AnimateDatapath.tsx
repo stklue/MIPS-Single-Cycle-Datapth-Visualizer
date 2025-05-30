@@ -1,6 +1,7 @@
 import type { Bus } from "../types/types";
 
-export const BusRenderer = ({ bus }: { bus: Bus }) => {
+export const AnimateDatapath = ({ bus }: { bus: Bus }) => {
+  console.log("This is the data received: ", bus);
   const start = bus.source;
   const end = bus.destination;
   const offset = 20; // distance from the source to place the elbow
@@ -29,7 +30,10 @@ export const BusRenderer = ({ bus }: { bus: Bus }) => {
       if (goingUp) {
         // Bend outwards: right → up → left → down (on outside)
         const step1 = { x: start.x + offset, y: start.y };
-        const step2 = { x: step1.x, y: start.y - bus.fromComponentHeight - ythreshold };
+        const step2 = {
+          x: step1.x,
+          y: start.y - bus.fromComponentHeight - ythreshold,
+        };
         const step3 = { x: end.x - offset, y: step2.y };
         const step4 = { x: step3.x, y: end.y };
 
@@ -47,7 +51,7 @@ export const BusRenderer = ({ bus }: { bus: Bus }) => {
         const step2 = { x: step1.x, y: end.y + bus.fromComponentHeight * 0.5 };
         const step3 = { x: end.x - offset, y: step2.y };
         const step4 = { x: step3.x, y: end.y };
-       
+
         path = `
         M ${start.x} ${start.y}
         L ${step1.x} ${step1.y}
@@ -72,26 +76,29 @@ export const BusRenderer = ({ bus }: { bus: Bus }) => {
   }
   return (
     <>
-      <defs>
-        <marker
-          id="arrow"
-          markerWidth="4"
-          markerHeight="4"
-          refX="4"
-          refY="2"
-          orient="auto"
-          markerUnits="strokeWidth"
-        >
-          <path d="M 0 0 L 4 2 L 0 4 z" fill={bus.color || "#4FD1C5"} />
-        </marker>
-      </defs>
-      <path
-        d={path}
-        stroke={bus.color || "#4FD1C5"}
-        strokeWidth={bus.width || 2}
-        fill="none"
-        markerEnd="url(#arrow)"
-      />
+        <defs>
+          <marker
+            id="arrow-anim"
+            markerWidth="4"
+            markerHeight="4"
+            refX="4"
+            refY="2"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <path d="M 0 0 L 4 2 L 0 4 z" 
+            className="arrow-init  fill-purple-700 stroke-purple-700 animate-line-arrow"
+            />
+          </marker>
+        </defs>
+        <path
+          d={path}
+          strokeWidth={bus.width || 2}
+          fill="none"
+          markerEnd="url(#arrow-anim)"
+            pathLength="1"
+            className="line-running stroke-purple-700  hover:stroke-blue-500 hover:cursor-pointer animate-line-running"
+        />
     </>
   );
 };

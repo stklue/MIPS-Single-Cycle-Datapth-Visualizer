@@ -15,17 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, .root   {
+body,
+.root {
   max-height: 100vh;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* background-color: green; */
-  /* margin: 1em; */
 }
-/* svg > path {
-  stroke-dashoffset: 1;
-  stroke-dasharray: 1; */
-/* } */
+
 
 .line-running {
   fill: none;
@@ -33,19 +27,40 @@ body, .root   {
   stroke-dashoffset: 1;
 }
 
+.arrow-init {
+  opacity: 0;
+  transform: scale(0.5);
+  transform-origin: center;
+  /* animation: arrow-fade-in 0.3s ease-out forwards; */
+  animation-delay: 1.8s;
+}
+
+
 @theme inline {
   --color-background: #1d1e22;
   --color-header: #feda6a;
   /* --color-canvas: #393f4d; */
   /* --color-canvas: #d4d4dc; */
 
-  --animate-line-running: line-animation 0.5s linear forwards;
+  --animate-line-running: line-animation 2s linear forwards;
+  --animate-line-arrow: arrow-animation 0.2s ease-out forwards;
+
   @keyframes line-animation {
     from {
       stroke-dashoffset: 1;
     }
     to {
       stroke-dashoffset: 0;
+    }
+  }
+  @keyframes arrow-animation {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }
